@@ -351,10 +351,10 @@ int main(int argc, char const *argv[]) {
 	if(!result1) {
 		printf("Test intal_gcd FAILED.\n");
 	} else {
-		if(0 == strcmp(result1, "1")) {
+		if(0 == strcmp(result1, a[0])) {
 			printf("Test intal_gcd PASSED\n");
 		} else {
-			printf("Test intal_gcd FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "1");
+			printf("Test intal_gcd FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, a[0]);
 		}
 		free(result1);
 	}

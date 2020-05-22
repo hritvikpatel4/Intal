@@ -418,9 +418,8 @@ char* intal_gcd(const char* intal1, const char* intal2) {
     }
 
     if(0 == intal_compare(intal1, intal2)) {
-        char *r = (char*) malloc(2 * sizeof(char));
-        strcpy(r, "1");
-        r[1] = '\0';
+        char *r = (char*) malloc(1001 * sizeof(char));
+        strcpy(r, intal1);
         return r;
     }
 
