@@ -19,14 +19,14 @@ string column with the help of this library.
 
 ## Approaches
 
-1) intal_add: Basic school addition technique by adding digitwise from the
-               end. 
+1) intal_add: Basic school addition technique where addition was performed
+              digitwise from the end. 
 
 2) intal_compare: Used length as a comparison metric for intals of different
-                   lengths and returned 1 if first one was longer or -1 if
-                   second was longer. If both were equal in length, each
-                   character was individually compared. If both the inputs are
-                   exhausted, then 0 was returned to indicated both are equal.
+                  lengths and returned 1 if first one was longer or -1 if
+                  second was longer. If both were equal in length, each
+                  character was individually compared. If both the inputs are
+                  exhausted, then 0 was returned to indicated both are equal.
 
 3) intal_diff: Used compare function to set the first number as greater one for
                convenience. Each digit was subtracted position wise and stored
@@ -40,16 +40,16 @@ string column with the help of this library.
                    multiplication results. Reverse the result and remove the
                    leading zeros.
 
-5) intal_mod: Used an O(logn) approach to find modulus in which we multiply a
-              temporary result by two until the range of the intal modulus
-              second intal stays in the required range of 0 to intal2 - 1.
+5) intal_mod: Used an O(log intal1) approach to find modulus in which we pad
+              zeros to the end of intal2 if its length was smaller than intal1.
+              Now we keep subtracting the new intal2 from intal1 till intal1 is
+              smaller than intal2.
 
 6) intal_gcd: Used Euclid's method. Summarized as, gcd(a,b)=gcd(b,a%b) is done
               repeatedly until the second parameter, b equals 0. Used the
               intal_mod from this library for the modulus operation.
 
-7) intal_pow: Used the intal_mul function in this library for calculating the
-              power of a given number.
+7) intal_pow: Implemented what was asked in the specifications.
 
 8) intal_fibonacci: Used the iterative method of generating fiboanacci numbers.
 
@@ -99,3 +99,5 @@ string column with the help of this library.
 
 ## Future Work
 1) Add the functionality of division which could be useful.
+2) Can change the implementation of intal_mod to the same implementation found in
+   Python which uses a combination of my Implemented logic and long division.

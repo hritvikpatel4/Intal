@@ -215,6 +215,18 @@ int main(int argc, char const *argv[]) {
 		free(result1);
 	}
 
+	result1 = intal_mod("999", "10");
+	if(!result1) {
+		printf("Test intal_mod FAILED.\n");
+	} else {
+		if(0 == strcmp(result1, "9")) {
+			printf("Test intal_mod PASSED\n");
+		} else {
+			printf("Test intal_mod FAILED.\nYour answer: %s\nExpected answer: %s\n", result1, "9");
+		}
+		free(result1);
+	}
+
 	result1 = intal_mod(a[3], a[4]);
 	if(!result1) {
 		printf("Test intal_mod FAILED.\n");
@@ -511,7 +523,7 @@ int main(int argc, char const *argv[]) {
 	} else {
 		printf("Test intal_search FAILED.\nYour answer: %d\nExpected answer: %d\n", index1, 6);
 	}
-	
+
 	intal_sort(a, n);
 	printf("\nTest intal_sort PASSED only if the following sequence of %d intals are sorted in nondecreasing order.\n", n);
 	for (int i = 0; i < n; i++) {

@@ -328,56 +328,61 @@ char* intal_multiply(const char* intal1, const char* intal2) {
 
 // Returns intal1 mod intal2
 char* intal_mod(const char* intal1, const char* intal2) {
-    if(0 == intal_compare(intal1, "0")) {
+    int c = intal_compare(intal1, intal2);
+    if(0 == c) {
         char *r = (char*) malloc(2 * sizeof(char));
         strcpy(r, "0");
-        r[1] = '\0';
         return r;
     }
 
-    if(0 == intal_compare(intal1, intal2)) {
-        char *r = (char*) malloc(2 * sizeof(char));
-        strcpy(r, "0");
-        r[1] = '\0';
+    else if(-1 == c) {
+        char *r = (char*) malloc((strlen(intal1) + 1) * sizeof(char));
+        strcpy(r, intal1);
         return r;
     }
 
-    char *num1 = (char*) malloc(1001 * sizeof(char));
-    char *num2 = (char*) malloc(1001 * sizeof(char));
-    char *result = (char*) malloc(1001 * sizeof(char));
-    char *temp = (char*) malloc(1001 * sizeof(char));
-    strcpy(num1, intal1);
-    strcpy(num2, intal2);
-    strcpy(result, intal1);
-    int flag = 0;
+    else {
+        int dividend_len = strlen(intal1);
+        int divisor_len = strlen(intal2);
+        char *num1 = (char*) malloc((dividend_len + 1) * sizeof(char));
+        char *num2 = (char*) malloc((dividend_len + 1) * sizeof(char));
+        char *temp;
+        strcpy(num1, intal1);
 
-    while(-1 != intal_compare(result, num2)) {
-        strcpy(temp, num2);
-        while(-1 == intal_compare(temp, result)) {
-            temp = intal_multiply(temp, "2");
+        while(1 == intal_compare(num1, intal2)) {
+            dividend_len = strlen(num1);
+            strcpy(num2, intal2);
+
+            if(dividend_len - divisor_len >= 1) {
+                int i = 0;
+
+                for(i = 0; i < dividend_len - divisor_len - 1; i++) {
+                    num2[divisor_len + i] = '0';
+                }
+                num2[divisor_len + i] = '\0';
+                temp = intal_multiply(num2, "10");
+
+                if(-1 == intal_compare(temp, num1)) {
+                    num2[divisor_len + i] = '0';
+                    i++;
+                    num2[divisor_len + i] = '\0';
+                }
+
+                free(temp);
+            }
+
+            temp = intal_diff(num1, num2);
+            free(num1);
+            num1 = temp;
         }
 
-        result = intal_diff(temp, result);
-        flag = (flag + 1) % 2;
-    }
+        if(0 == intal_compare(num1, intal2)) {
+            strcpy(num1, "0");
+        }
 
-    if(0 == intal_compare(result, "0")) {
-        char *r = (char*) malloc(2 * sizeof(char));
-        strcpy(r, "0");
-        r[1] = '\0';
-        free(num1);
         free(num2);
-        free(temp);
-        free(result);
-        return r;
+        return num1;
     }
-
-    if(flag == 1) return intal_diff(num2, result);
-
-    free(num1);
-    free(num2);
-    free(temp);
-    return result;
 }
 
 // Returns intal1 ^ n.
@@ -500,6 +505,8 @@ char* intal_factorial(unsigned int n) {
 
 // Returns the Binomial Coefficient C(n,k).
 char* intal_bincoeff(unsigned int n, unsigned int k) {
+    k = (k <= n / 2) ? k : (n - k);
+
     char **DP = (char**) malloc((k + 1) * sizeof(char*));
 
     for(lld i = 0; i < k + 1; i++) {
@@ -591,13 +598,14 @@ int intal_binsearch(char **arr, int n, const char* key) {
 
     while(l <= r) {
         lld m = l + (r - l) / 2;
+        int c = intal_compare(arr[m], key);
 
-        if(0 == intal_compare(arr[m], key)) {
+        if(0 == c) {
             res = m;
             break;
         }
 
-        if(-1 == intal_compare(arr[m], key))
+        else if(-1 == c)
             l = m + 1;
 
         else
